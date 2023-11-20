@@ -1,0 +1,17 @@
+{
+	"channel": [{
+		"name": "SSL.SVRCONN",
+		"clientConnection": {
+			"connection": [{
+				"host": "aztlan1.fyre.ibm.com",
+				"port": 1419
+			}],
+			"queueManager": "QM92TLS"
+		},
+		"transmissionSecurity": {
+			"cipherSpecification": "TLS_AES_128_GCM_SHA256",
+			"certificateLabel": "ibmwebspheremqadministrator",
+			},
+		"type": "clientConnection"
+	}]
+}

@@ -1,0 +1,13 @@
+JSON with SSL
+local JKS
+qmgr group
+multi thread
+- for listening
+- for putting
+maybe conn pooling but i doin't think needed
+reconnect
+amq
+camel
+uniform clustering
+can do a lookup for ccdt
+user and password on client connection

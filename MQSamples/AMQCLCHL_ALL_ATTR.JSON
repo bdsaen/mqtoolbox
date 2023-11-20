@@ -1,0 +1,58 @@
+{
+	"channel": [{
+		"compression": {
+			"header": ["system"],
+			"message": ["zlibfast"]
+		},
+		"connectionManagement": {
+			"sharingConversations": 10,
+			"clientWeight": 1,
+			"affinity": "none",
+			"defaultReconnect": "yes",
+			"disconnectInterval": 6000,
+			"heartbeatInterval": 600,
+			"keepAliveInterval": -1,
+			"localAddress": [{
+				"portRange": {
+					"low": 2020,
+					"high": 3030
+				}
+			}]
+		},
+		"exits": {
+			"receive": [{
+				"name": "",
+				"userData": ""
+			}],
+			"security": {
+				"name": "",
+				"userData": ""
+			},
+			"send": [{
+				"name": "",
+				"userData": ""
+			}]
+		},
+		"general": {
+			"description": "First channel",
+			"maximumMessageLength": 4194304
+		},
+		"name": "the_channel",
+		"clientConnection": {
+			"connection": [{
+				"host": "localhost",
+				"port": 1414
+			}],
+			"queueManager": "QM1"
+		},
+		"timestamps": {
+			"altered": "2018-12-04T15:37:22.000Z"
+		},
+		"transmissionSecurity": {
+			"cipherSpecification": "",
+			"certificateLabel": "",
+			"certificatePeerName": ""
+		},
+		"type": "clientConnection"
+	}]
+}

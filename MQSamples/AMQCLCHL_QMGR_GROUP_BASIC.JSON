@@ -1,0 +1,24 @@
+{
+	"channel": [{
+		"name": "TEST.SVRCONN",
+		"clientConnection": {
+			"connection": [{
+				"host": "localhost",
+				"port": 1414
+			}],
+			"queueManager": "QMGRGRP1"
+		},
+		"type": "clientConnection"
+	},
+	{
+		"name": "TEST.SVRCONN",
+		"clientConnection": {
+			"connection": [{
+				"host": "localhost",
+				"port": 1415
+			}],
+			"queueManager": "QMGRGRP1"
+		},
+		"type": "clientConnection"
+	}]
+}

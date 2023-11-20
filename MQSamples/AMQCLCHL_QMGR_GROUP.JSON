@@ -1,0 +1,51 @@
+{
+	"channel": 
+	[
+	{
+		"connectionManagement": {
+			"sharingConversations": 10,
+			"clientWeight": 1,
+			"affinity": "none",
+			"defaultReconnect": "yes",
+			"disconnectInterval": 6000,
+			"heartbeatInterval": 600,
+			"keepAliveInterval": -1,
+		},
+		"general": {
+			"description": "QMGR1",
+			"maximumMessageLength": 4194304
+		},
+		"name": "TEST.SVRCONN",
+		"clientConnection": {"connection": [{"host": "localhost","port": 1414}],"queueManager": "QMGRGRP1"},
+		"transmissionSecurity": {
+			"cipherSpecification": "",
+			"certificateLabel": "",
+			"certificatePeerName": ""
+		},
+		"type": "clientConnection"
+	},
+	{
+		"connectionManagement": {
+			"sharingConversations": 10,
+			"clientWeight": 1,
+			"affinity": "none",
+			"defaultReconnect": "yes",
+			"disconnectInterval": 6000,
+			"heartbeatInterval": 600,
+			"keepAliveInterval": -1,
+		},
+		"general": {
+			"description": "QMGR2",
+			"maximumMessageLength": 4194304
+		},
+		"name": "TEST.SVRCONN",
+		"clientConnection": {"connection": [{"host": "localhost","port": 1415}],	"queueManager": "QMGRGRP1"},
+		"transmissionSecurity": {
+			"cipherSpecification": "",
+			"certificateLabel": "",
+			"certificatePeerName": ""
+		},
+		"type": "clientConnection"
+	}
+	]
+}
