@@ -25,12 +25,10 @@ SOFTWARE.
 package com.mqtoolbox.conn;
 
 import java.util.Hashtable;
-
 import javax.net.ssl.SSLSocketFactory;
 import com.ibm.mq.MQException;
 import com.ibm.mq.MQQueueManager;
 import com.ibm.mq.constants.MQConstants;
-import com.mqtoolbox.support.StopWatch;
 import com.mqtoolbox.support.TranslateSSLCipherSuite;
 
 /**
@@ -42,25 +40,23 @@ public class ClientConnection_Hashtable_WithSSL {
 	public static void main(String args[]) {
 		ClientConnection_Hashtable_WithSSL conn = new ClientConnection_Hashtable_WithSSL();
 		MQQueueManager qmgr = null;
-		StopWatch stopwatch = new StopWatch();
 
 		System.out.println("Client connection using hashtable");
 		try {
-			stopwatch.start();
-			System.out.println(stopwatch.formatInProgressTimeTaken("Before connect"));
 			qmgr = conn.connect("QMGR1", "TEST.SVRCONN.SSL", "localhost", 1414);
 //			qmgr = conn.connect("QMGR2", "TEST.SVRCONN.SSL", "localhost", 1415);
-			System.out.println(stopwatch.formatInProgressTimeTaken("After connect"));
-			stopwatch.stop();
-
-			stopwatch.start();
-			System.out.println(stopwatch.formatInProgressTimeTaken("Before disconnect"));
-			qmgr.disconnect();
-			System.out.println(stopwatch.formatInProgressTimeTaken("After disconnect"));
-			stopwatch.stop();
 		} catch (MQException e) {
 			System.out.println(
 					String.format("MQ error details: %s(%s)\n\n%s", MQConstants.lookupReasonCode(e.getReason()), e.getReason(), e.getCause()));
+		} finally {
+			if (qmgr != null) {
+				try {
+					qmgr.disconnect();
+				} catch (MQException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
 		}
 	}
 
@@ -87,7 +83,7 @@ public class ClientConnection_Hashtable_WithSSL {
 		// Add the SSL keystore
 		Keystore ks = new Keystore("D:\\Dev\\#SSL\\mqtoolbox\\client.jks", "password", "D:\\Dev\\#SSL\\mqtoolbox\\client.jks", "password");
 		ks.getSSL(props);
-		
+
 		// Set the SSL CipherSuite
 		props.put(MQConstants.SSL_CIPHER_SUITE_PROPERTY, TranslateSSLCipherSuite.SSLCipherSuite.ECDHE_RSA_AES_256_GCM_SHA384.getValue());
 

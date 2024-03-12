@@ -1,3 +1,27 @@
+/**
+ MIT License
+
+Copyright (c) 2023 bdsaen
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+ */
+
 package com.mqtoolbox.pubsub;
 
 import javax.jms.JMSException;
@@ -38,8 +62,8 @@ public class PubSubUsingRetainedPublications {
 		MQTopicPublisher oracleStockPricePublisher = null;
 		MQTopicSubscriber ibmStockPriceSubscriber = null;
 		MQTopicSubscriber oracleStockPriceSubscriber = null;
-		MQTopicSubscriber allStockPriceSubscriber=null;
-		
+		MQTopicSubscriber allStockPriceSubscriber = null;
+
 		Message msg = null;
 
 		try {
@@ -75,7 +99,7 @@ public class PubSubUsingRetainedPublications {
 			oracleStockPriceMsg = pvt.getSession().createTextMessage("$98.00");
 			oracleStockPriceMsg.setIntProperty(WMQConstants.JMS_IBM_RETAIN, WMQConstants.RETAIN_PUBLICATION);
 			oracleStockPricePublisher.send(oracleStockPriceMsg);
-			
+
 			// Retained publication 3, replaces retained publication 2
 			ibmStockPriceMsg = pvt.getSession().createTextMessage("$127.54");
 			ibmStockPriceMsg.setIntProperty(WMQConstants.JMS_IBM_RETAIN, WMQConstants.RETAIN_PUBLICATION);
@@ -101,7 +125,7 @@ public class PubSubUsingRetainedPublications {
 			// Now consume all retained stock prices
 			MQTopic allStockPriceTopic = pvt.createTopic("topic://STOCK/PRICE/#");
 			allStockPriceSubscriber = pvt.createSubscriber(allStockPriceTopic);
-			
+
 			msg = allStockPriceSubscriber.receive(5000); // milliseconds
 			if (msg == null)
 				System.out.println("No publication");
@@ -113,7 +137,7 @@ public class PubSubUsingRetainedPublications {
 				System.out.println("No publication");
 			else
 				System.out.println("Consumed stock price " + msg);
-			
+
 		} catch (JMSException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

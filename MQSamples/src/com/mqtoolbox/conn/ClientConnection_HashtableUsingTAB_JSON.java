@@ -29,7 +29,6 @@ import java.net.MalformedURLException;
 import com.ibm.mq.MQException;
 import com.ibm.mq.MQQueueManager;
 import com.ibm.mq.constants.MQConstants;
-import com.mqtoolbox.support.StopWatch;
 
 /**
  * Basic client connection to a queue manager using a Hashtable. This allows for SSL if required. Using a binary channel
@@ -43,7 +42,6 @@ public class ClientConnection_HashtableUsingTAB_JSON {
 		ClientConnection_HashtableUsingTAB_JSON conn = new ClientConnection_HashtableUsingTAB_JSON();
 		MQQueueManager qmgr1 = null;
 		MQQueueManager qmgr2 = null;
-		StopWatch stopwatch = new StopWatch();
 
 		System.out.println("Client connection using hashtable with a JSON TAB file");
 		try {
@@ -59,37 +57,34 @@ public class ClientConnection_HashtableUsingTAB_JSON {
 
 			// JSON file to connect to a queue manager group
 
-			stopwatch.start();
-			System.out.println(stopwatch.formatInProgressTimeTaken("Before connect 1"));
 			qmgr1 = conn.connect("*QMGRGRP1", "file:AMQCLCHL_QMGR_GROUP.JSON");
-			System.out.println(stopwatch.formatInProgressTimeTaken("After connect 1"));
 			System.out.println("Connect to QMGR group " + qmgr1.getName() + " - " + qmgr1.getDescription());
-			stopwatch.stop();
 
-			stopwatch.start();
-			System.out.println(stopwatch.formatInProgressTimeTaken("Before connect 2"));
 			qmgr2 = conn.connect("*QMGRGRP1", "file:AMQCLCHL_QMGR_GROUP.JSON"); // Didn't code a disconnect
-			System.out.println(stopwatch.formatInProgressTimeTaken("After connect 2"));
 			System.out.println("Connect to QMGR group " + qmgr2.getName() + " - " + qmgr2.getDescription());
-			stopwatch.stop();
-
-			stopwatch.start();
-			System.out.println(stopwatch.formatInProgressTimeTaken("Before disconnect 1"));
-			qmgr1.disconnect();
-			System.out.println(stopwatch.formatInProgressTimeTaken("After disconnect 1"));
-			stopwatch.stop();
-
-			stopwatch.start();
-			System.out.println(stopwatch.formatInProgressTimeTaken("Before disconnect 2"));
-			qmgr1.disconnect();
-			System.out.println(stopwatch.formatInProgressTimeTaken("After disconnect 2"));
-			stopwatch.stop();
 
 		} catch (MQException e) {
 			System.out.println(
 					String.format("MQ error details: %s(%s)\n\n%s", MQConstants.lookupReasonCode(e.getReason()), e.getReason(), e.getCause()));
 		} catch (MalformedURLException e) {
 			System.out.println(String.format("MQ error details: Invalid CCDT URL\n\n%s", e.getMessage(), e.getCause()));
+		} finally {
+			if (qmgr1 != null) {
+				try {
+					qmgr1.disconnect();
+				} catch (MQException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			if (qmgr2 != null) {
+				try {
+					qmgr2.disconnect();
+				} catch (MQException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
 		}
 	}
 

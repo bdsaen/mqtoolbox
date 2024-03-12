@@ -24,8 +24,8 @@ SOFTWARE.
 
 package com.mqtoolbox.conn;
 
-import java.net.URL;
 import java.util.Hashtable;
+import java.net.URL;
 
 import javax.net.ssl.SSLSocketFactory;
 
@@ -33,7 +33,6 @@ import java.net.MalformedURLException;
 import com.ibm.mq.MQException;
 import com.ibm.mq.MQQueueManager;
 import com.ibm.mq.constants.MQConstants;
-import com.mqtoolbox.support.StopWatch;
 import com.mqtoolbox.support.TranslateSSLCipherSuite;
 
 /**
@@ -47,7 +46,6 @@ public class ClientConnection_HashtableUsingTAB_JSON_WithSSL {
 	public static void main(String args[]) {
 		ClientConnection_HashtableUsingTAB_JSON_WithSSL conn = new ClientConnection_HashtableUsingTAB_JSON_WithSSL();
 		MQQueueManager qmgr1 = null;
-		StopWatch stopwatch = new StopWatch();
 
 		@SuppressWarnings("rawtypes")
 		Hashtable props = new Hashtable<String, SSLSocketFactory>();
@@ -55,34 +53,29 @@ public class ClientConnection_HashtableUsingTAB_JSON_WithSSL {
 		System.out.println("Client connection using hashtable with a JSON TAB file using SSL");
 		try {
 
-			stopwatch.start();
-
 			// Set the property to translate the SSL CiperSuite correctly depending on the Java provider (IBM or Oracle)
 			TranslateSSLCipherSuite.setCipherMappings();
 
 			// Add the SSL keystore
-			System.out.println(stopwatch.formatInProgressTimeTaken("Before load keystore"));
 			Keystore ks = new Keystore("D:\\Dev\\#SSL\\mqtoolbox\\client.jks", "password", "D:\\Dev\\#SSL\\mqtoolbox\\client.jks", "password");
 			ks.getSSL(props);
-			System.out.println(stopwatch.formatInProgressTimeTaken("After load keystore"));
-
-			System.out.println(stopwatch.formatInProgressTimeTaken("Before connect"));
 			qmgr1 = conn.connect("QMGR1", props, "file:AMQCLCHL_QMGR1_SSL.JSON");
-			System.out.println(stopwatch.formatInProgressTimeTaken("After connect"));
 			System.out.println("Connect to QMGR " + qmgr1.getName() + " - " + qmgr1.getDescription());
-			stopwatch.stop();
-
-			stopwatch.start();
-			System.out.println(stopwatch.formatInProgressTimeTaken("Before disconnect"));
-			qmgr1.disconnect();
-			System.out.println(stopwatch.formatInProgressTimeTaken("After disconnect"));
-			stopwatch.stop();
 
 		} catch (MQException e) {
 			System.out.println(
 					String.format("MQ error details: %s(%s)\n\n%s", MQConstants.lookupReasonCode(e.getReason()), e.getReason(), e.getCause()));
 		} catch (MalformedURLException e) {
 			System.out.println(String.format("MQ error details: Invalid CCDT URL\n\n%s", e.getMessage(), e.getCause()));
+		} finally {
+			if (qmgr1 != null) {
+				try {
+					qmgr1.disconnect();
+				} catch (MQException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
 		}
 	}
 

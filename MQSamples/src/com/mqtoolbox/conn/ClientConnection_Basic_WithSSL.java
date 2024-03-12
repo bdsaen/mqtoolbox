@@ -28,7 +28,6 @@ import com.ibm.mq.MQEnvironment;
 import com.ibm.mq.MQException;
 import com.ibm.mq.MQQueueManager;
 import com.ibm.mq.constants.MQConstants;
-import com.mqtoolbox.support.StopWatch;
 
 /**
  * Basic client connection to a queue manager. Using MQEnvironment variables, while simple, is perhaps not the ideal
@@ -45,26 +44,23 @@ public class ClientConnection_Basic_WithSSL {
 	public static void main(String args[]) {
 		ClientConnection_Basic_WithSSL conn = new ClientConnection_Basic_WithSSL();
 		MQQueueManager qmgr = null;
-		StopWatch stopwatch = new StopWatch();
 
 		System.out.println("Basic client connection");
 		try {
 			conn.setSSLKeystore("D:\\Dev\\#SSL\\mqtoolbox\\client.jks", "password");
-
-			stopwatch.start();
-			System.out.println(stopwatch.formatInProgressTimeTaken("Before connect"));
 			qmgr = conn.connect("QMGR1", "TEST.SVRCONN.SSL", "localhost", 1414, "TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384"); // Oracle style
-			System.out.println(stopwatch.formatInProgressTimeTaken("After connect"));
-			stopwatch.stop();
-
-			stopwatch.start();
-			System.out.println(stopwatch.formatInProgressTimeTaken("Before disconnect"));
-			qmgr.disconnect();
-			System.out.println(stopwatch.formatInProgressTimeTaken("After disconnect"));
-			stopwatch.stop();
 		} catch (MQException e) {
 			System.out.println(
 					String.format("MQ error details: %s(%s)\n\n%s", MQConstants.lookupReasonCode(e.getReason()), e.getReason(), e.getCause()));
+		} finally {
+			if (qmgr != null) {
+				try {
+					qmgr.disconnect();
+				} catch (MQException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
 		}
 	}
 
