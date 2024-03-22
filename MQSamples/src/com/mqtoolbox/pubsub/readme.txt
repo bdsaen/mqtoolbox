@@ -11,6 +11,9 @@ echo define topic(STOCK.PRICE.ORACLE.STATE.RETAINED) topicstr(STOCK/PRICE/ORACLE
 echo define topic(STOCK.TRADE) topicstr(STOCK/TRADE) | runmqsc QMGR1
 echo define topic(MARKET_OPEN) topicstr(MARKET_OPEN) | runmqsc QMGR1
 
+echo define topic(STATE) topicstr(CURRENT_TEMPERATURE) | runmqsc QMGR1
+echo define topic(EVENT) topicstr(PROPERTY_SOLD) | runmqsc QMGR1
+
 echo DEFINE CHANNEL('TEST.SVRCONN') CHLTYPE(SVRCONN) MCAUSER('noaccess') | runmqsc QMGR1
 
 echo SET CHLAUTH ('TEST.SVRCONN') TYPE(USERMAP) DESCR('Allow') CLNTUSER('your_logged_in_name') MCAUSER('MUSR_MQADMIN') USERSRC(MAP) | runmqsc QMGR1

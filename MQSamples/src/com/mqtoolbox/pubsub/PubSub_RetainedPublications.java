@@ -44,14 +44,14 @@ import com.ibm.msg.client.wmq.WMQConstants;
  * - the publisher then publishes a new publication at which time the subscriber consumes it
  * - run a few scenarios
  */
-public class PubSubUsingRetainedPublications {
+public class PubSub_RetainedPublications {
 
 	private MQTopicConnectionFactory mqCF = null;
 	private MQTopicConnection connection = null;
 	private MQTopicSession session = null;
 
 	public static void main(String[] args) {
-		PubSubUsingRetainedPublications pvt = new PubSubUsingRetainedPublications();
+		PubSub_RetainedPublications pvt = new PubSub_RetainedPublications();
 
 		// if (pvt.bindConn("QMGR1") == false)
 //		return;
