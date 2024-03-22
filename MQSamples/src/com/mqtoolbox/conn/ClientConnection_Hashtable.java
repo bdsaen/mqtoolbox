@@ -40,8 +40,8 @@ public class ClientConnection_Hashtable {
 		ClientConnection_Hashtable conn = new ClientConnection_Hashtable();
 		MQQueueManager qmgr = null;
 
-		System.out.println("Client connection using hashtable");
 		try {
+			System.out.println("Client connection using hashtable");
 //			qmgr = conn.connect("QMGR1", "TEST.SVRCONN", "localhost", 1414);
 			qmgr = conn.connect("QMGR2", "TEST.SVRCONN", "localhost", 1415);
 		} catch (MQException e) {
